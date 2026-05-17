@@ -7,6 +7,7 @@ import { LoginRequest } from '../../core/models/loginRequest.interface';
 import { AuthService } from '../../core/service/auth.service';
 import {MaterialModule} from "../../shared/material.module";
 import { CommonModule } from '@angular/common';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +16,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  private authService = inject(AuthService);
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private sessionService = inject(SessionService);
+  private readonly authService = inject(AuthService);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly sessionService = inject(SessionService);
 
   public hide = true;
   public onError = false;
@@ -42,12 +43,14 @@ export class LoginComponent {
 
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe({
+    this.authService.login(loginRequest).pipe(take(1)).subscribe({
       next: (response: SessionInformation) => {
         this.sessionService.logIn(response);
         this.router.navigate(['/sessions']);
       },
-      error: error => this.onError = true,
+      error: (_error) => this.onError = true,
     });
   }
 }
+
+
