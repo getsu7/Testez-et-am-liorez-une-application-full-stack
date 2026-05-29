@@ -13,10 +13,15 @@ describe('MeComponent', () => {
   let component: MeComponent;
   let fixture: ComponentFixture<MeComponent>;
 
-  const mockSessionService = {
+  const mockSessionService: Partial<SessionService> = {
     sessionInformation: {
       admin: true,
-      id: 1
+      id: 1,
+      token: 'test-token',
+      type: 'Bearer',
+      username: 'test',
+      firstName: 'Test',
+      lastName: 'User'
     }
   }
   beforeEach(async () => {

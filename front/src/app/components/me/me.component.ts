@@ -32,19 +32,19 @@ export class MeComponent implements OnInit, OnDestroy {
   }
 
   public back(): void {
-    window.history.back();
+    globalThis.history.back();
   }
 
-  public delete(): void {
-    this.userService
-      .delete(this.sessionService.sessionInformation!.id.toString())
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((_) => {
-        this.matSnackBar.open("Your account has been deleted !", 'Close', { duration: 3000 });
-        this.sessionService.logOut();
-        this.router.navigate(['/']);
-      })
-  }
+   public delete(): void {
+     this.userService
+       .delete(this.sessionService.sessionInformation!.id.toString())
+       .pipe(takeUntil(this.destroy$))
+       .subscribe(() => {
+         this.matSnackBar.open("Your account has been deleted !", 'Close', { duration: 3000 });
+         this.sessionService.logOut();
+         this.router.navigate(['/']);
+       })
+   }
 
   ngOnDestroy(): void {
     this.destroy$.next();

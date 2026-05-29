@@ -11,9 +11,15 @@ describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
 
-  const mockSessionService = {
+  const mockSessionService: Partial<SessionService> = {
     sessionInformation: {
-      admin: true
+      admin: true,
+      id: 1,
+      token: 'test-token',
+      type: 'Bearer',
+      username: 'test',
+      firstName: 'Test',
+      lastName: 'User'
     }
   }
 

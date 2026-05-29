@@ -18,12 +18,12 @@ import { takeUntil, switchMap } from 'rxjs/operators';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit, OnDestroy {
-  public session: Session | undefined;
-  public teacher: Teacher | undefined;
-  public isParticipate = false;
-  public isAdmin = false;
-  public sessionId: string;
-  public userId: string;
+   public session: Session | undefined;
+   public teacher: Teacher | undefined;
+   public isParticipate = false;
+   public isAdmin = false;
+   public sessionId: string = '';
+   public userId: string = '';
 
   private readonly route = inject(ActivatedRoute);
   private readonly sessionService = inject(SessionService);
@@ -44,32 +44,32 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.fetchSession();
   }
 
-  public back() {
-    globalThis.history.back();
-  }
+   public back(): void {
+     globalThis.history.back();
+   }
 
-  public delete(): void {
-    this.sessionApiService
-      .delete(this.sessionId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((_: any) => {
-          this.matSnackBar.open('Session deleted !', 'Close', { duration: 3000 });
-          this.router.navigate(['sessions']);
-        }
-      );
-  }
+   public delete(): void {
+     this.sessionApiService
+       .delete(this.sessionId)
+       .pipe(takeUntil(this.destroy$))
+       .subscribe((_: void) => {
+           this.matSnackBar.open('Session deleted !', 'Close', { duration: 3000 });
+           this.router.navigate(['sessions']);
+         }
+       );
+   }
 
-  public participate(): void {
-    this.sessionApiService.participate(this.sessionId, this.userId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(_ => this.fetchSession());
-  }
+   public participate(): void {
+     this.sessionApiService.participate(this.sessionId, this.userId)
+       .pipe(takeUntil(this.destroy$))
+       .subscribe((_: void) => this.fetchSession());
+   }
 
-  public unParticipate(): void {
-    this.sessionApiService.unParticipate(this.sessionId, this.userId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(_ => this.fetchSession());
-  }
+   public unParticipate(): void {
+     this.sessionApiService.unParticipate(this.sessionId, this.userId)
+       .pipe(takeUntil(this.destroy$))
+       .subscribe((_: void) => this.fetchSession());
+   }
 
   private fetchSession(): void {
     this.sessionApiService

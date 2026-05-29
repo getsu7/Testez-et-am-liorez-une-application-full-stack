@@ -41,16 +41,16 @@ export class LoginComponent {
     ]
   });
 
-  public submit(): void {
-    const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).pipe(take(1)).subscribe({
-      next: (response: SessionInformation) => {
-        this.sessionService.logIn(response);
-        this.router.navigate(['/sessions']);
-      },
-      error: (_error) => this.onError = true,
-    });
-  }
+   public submit(): void {
+     const loginRequest = this.form.value as LoginRequest;
+     this.authService.login(loginRequest).pipe(take(1)).subscribe({
+       next: (response: SessionInformation) => {
+         this.sessionService.logIn(response);
+         this.router.navigate(['/sessions']);
+       },
+       error: () => this.onError = true,
+     });
+   }
 }
 
 

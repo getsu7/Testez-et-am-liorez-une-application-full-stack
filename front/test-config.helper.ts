@@ -1,23 +1,25 @@
 import { TestBed } from '@angular/core/testing';
+import { Provider } from '@angular/core';
 
-type CompilerOptions = Partial<{
-  providers: any[];
-  useJit: boolean;
-  preserveWhitespaces: boolean;
-}>;
+interface CompilerOptions {
+  providers?: Provider[];
+  useJit?: boolean;
+  preserveWhitespaces?: boolean;
+}
+
 export type ConfigureFn = (testBed: typeof TestBed) => void;
 
-export const configureTests = (configure: ConfigureFn, compilerOptions: CompilerOptions = {}) => {
-  const compilerConfig: CompilerOptions = {
-    preserveWhitespaces: false,
-    ...compilerOptions,
-  };
+export const configureTests = (configure: ConfigureFn, compilerOptions: CompilerOptions = {}): Promise<TestBed> => {
+   const compilerConfig: CompilerOptions = {
+     preserveWhitespaces: false,
+     ...compilerOptions,
+   };
 
-  const configuredTestBed = TestBed.configureCompiler(compilerConfig);
+   const configuredTestBed = TestBed.configureCompiler(compilerConfig);
 
-  // @ts-ignore
-  configure(configuredTestBed);
+   // @ts-expect-error
+   configure(configuredTestBed);
 
-  // @ts-ignore
-  return configuredTestBed.compileComponents().then(() => configuredTestBed);
-};
+   // @ts-expect-error
+   return configuredTestBed.compileComponents().then(() => configuredTestBed);
+ };

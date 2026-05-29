@@ -54,14 +54,14 @@ export class RegisterComponent {
   });
 
 
-  public submit(): void {
-    const registerRequest = this.form.value as RegisterRequest;
-    this.authService.register(registerRequest).pipe(take(1)).subscribe({
-        next: (_: void) => this.router.navigate(['/login']),
-        error: _ => this.onError = true,
-      }
-    );
-  }
+   public submit(): void {
+     const registerRequest = this.form.value as RegisterRequest;
+     this.authService.register(registerRequest).pipe(take(1)).subscribe({
+         next: () => this.router.navigate(['/login']),
+         error: () => this.onError = true,
+       }
+     );
+   }
 
 }
 

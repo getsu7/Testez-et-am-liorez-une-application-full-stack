@@ -19,9 +19,15 @@ describe('FormComponent', () => {
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
 
-  const mockSessionService = {
+  const mockSessionService: Partial<SessionService> = {
     sessionInformation: {
-      admin: true
+      admin: true,
+      id: 1,
+      token: 'test-token',
+      type: 'Bearer',
+      username: 'test',
+      firstName: 'Test',
+      lastName: 'User'
     }
   }
 
