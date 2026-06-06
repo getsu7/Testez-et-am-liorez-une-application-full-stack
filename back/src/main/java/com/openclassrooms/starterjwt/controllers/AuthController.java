@@ -6,9 +6,9 @@ import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
 import com.openclassrooms.starterjwt.payload.response.JwtResponse;
 import com.openclassrooms.starterjwt.payload.response.MessageResponse;
-import com.openclassrooms.starterjwt.repository.UserRepository;
 import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
 import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import com.openclassrooms.starterjwt.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,16 +27,16 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     public AuthController(AuthenticationManager authenticationManager,
                    PasswordEncoder passwordEncoder,
                    JwtUtils jwtUtils,
-                   UserRepository userRepository) {
+                   UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -50,7 +50,7 @@ public class AuthController {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         boolean isAdmin = false;
-        User user = this.userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+        User user = this.userService.findByEmail(userDetails.getUsername()).orElse(null);
         if (user != null) {
             isAdmin = user.isAdmin();
         }
@@ -65,7 +65,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userService.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
@@ -78,7 +78,7 @@ public class AuthController {
                 passwordEncoder.encode(signUpRequest.getPassword()),
                 false);
 
-        userRepository.save(user);
+        userService.create(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
