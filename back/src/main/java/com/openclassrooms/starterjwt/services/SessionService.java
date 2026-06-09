@@ -6,7 +6,9 @@ import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.SessionRepository;
 import com.openclassrooms.starterjwt.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +38,11 @@ public class SessionService {
 
     public Session getById(Long id) {
         return this.sessionRepository.findById(id).orElse(null);
+    }
+
+    public Session getByIdOrThrow(Long id) {
+        return this.sessionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public Session update(Long id, Session session) {
