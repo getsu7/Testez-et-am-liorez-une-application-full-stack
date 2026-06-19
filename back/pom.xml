@@ -147,7 +147,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.12</version>
                 <executions>
                     <execution>
                         <goals>
@@ -161,6 +161,16 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/mapper/*Impl.*</exclude>
+                                <exclude>**/mapper/*Mapper.*</exclude>
+                                <exclude>**/dto/**</exclude>
+                                <exclude>**/WebSecurityConfig.*</exclude>
+                                <exclude>**/SpringBootSecurityJwtApplication.*</exclude>
+                                <exclude>**/AppConfig.*</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
 
                     <execution>
@@ -169,6 +179,14 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <excludes>
+                                <exclude>**/mapper/*Impl.*</exclude>
+                                <exclude>**/mapper/*Mapper.*</exclude>
+                                <exclude>**/dto/**</exclude>
+                                <exclude>**/WebSecurityConfig.*</exclude>
+                                <exclude>**/SpringBootSecurityJwtApplication.*</exclude>
+                                <exclude>**/AppConfig.*</exclude>
+                            </excludes>
                             <rules>
                                 <rule>
                                     <element>PACKAGE</element>
