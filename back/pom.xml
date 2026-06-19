@@ -172,6 +172,8 @@
                                 <exclude>**/mapper/*Impl.*</exclude>
                                 <exclude>**/mapper/*Mapper.*</exclude>
                                 <exclude>**/dto/**</exclude>
+                                <exclude>**/models/**</exclude>
+                                <exclude>**/payload/**</exclude>
                                 <exclude>**/WebSecurityConfig.*</exclude>
                                 <exclude>**/SpringBootSecurityJwtApplication.*</exclude>
                                 <exclude>**/AppConfig.*</exclude>
@@ -189,6 +191,7 @@
                                 <exclude>**/mapper/*Impl.*</exclude>
                                 <exclude>**/mapper/*Mapper.*</exclude>
                                 <exclude>**/dto/**</exclude>
+                                <exclude>**/models/**</exclude>
                                 <exclude>**/WebSecurityConfig.*</exclude>
                                 <exclude>**/SpringBootSecurityJwtApplication.*</exclude>
                                 <exclude>**/AppConfig.*</exclude>
